@@ -3,8 +3,8 @@ const cors = require('cors');
 const crypto = require('crypto');
 
 const app = express();
-const PORT = 3000;
-const apiKey = '28365924'; // Chave de API fixa
+const PORT = process.env.PORT; // Use a porta fornecida pelo Replit ou 3000 localmente
+const API_KEY = '28365924'; // Chave de API fixa
 
 // Middleware
 app.use(cors());
@@ -16,7 +16,7 @@ const history = [];
 // Função para criptografar uma mensagem
 function encryptMessage(message) {
     const algorithm = 'aes-256-cbc';
-    const key = crypto.scryptSync(apiKey, 'salt', 32); // Usa a chave fixa
+    const key = crypto.scryptSync(API_KEY, 'salt', 32); // Usa a chave fixa
     const iv = crypto.randomBytes(16);  // Vetor de inicialização
 
     const cipher = crypto.createCipheriv(algorithm, key, iv);
@@ -56,11 +56,6 @@ app.get('/history', (req, res) => {
     res.json(history);
 });
 
-// Iniciar o servidor
-app.listen(PORT, () => {
-    console.log(`Servidor rodando em http://localhost:${PORT}`);
-});
-
 // Função para descriptografar uma mensagem
 function decryptMessage(encryptedMessage, iv, apiKeyInput) {
     const algorithm = 'aes-256-cbc';
@@ -81,7 +76,7 @@ app.post('/decrypt', (req, res) => {
         return res.status(400).json({ error: 'Chave de API e índice da mensagem são obrigatórios.' });
     }
 
-    if (apiKey !== apiKey) {
+    if (apiKey !== API_KEY) {
         return res.status(401).json({ error: 'Chave de API inválida.' });
     }
 
@@ -96,4 +91,9 @@ app.post('/decrypt', (req, res) => {
     } catch (error) {
         res.status(500).json({ error: 'Erro ao descriptografar a mensagem.' });
     }
+});
+
+// Iniciar o servidor
+app.listen(PORT, () => {
+    console.log(`Servidor rodando`);
 });

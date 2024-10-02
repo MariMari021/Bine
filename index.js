@@ -5,6 +5,9 @@ const chat = document.getElementById('chat');
 const messageInput = document.getElementById('message-input');
 const sendMessageBtn = document.getElementById('send-message');
 
+// URL do servidor Replit
+const baseUrl = 'https://b9261979-20c5-4874-a926-581823a3cddd-00-3q8mtvtkpmubh.picard.replit.dev';
+
 // Função para adicionar mensagem ao chat
 function addChatMessage(message, type) {
     const msgElement = document.createElement('div');
@@ -37,7 +40,7 @@ function addActionButtons() {
 
         // Busca o histórico
         try {
-            const response = await fetch('http://localhost:3000/history');
+            const response = await fetch(`${baseUrl}/history`);
             if (response.ok) {
                 const history = await response.json();
                 addChatMessage('Histórico de Mensagens:', 'received'); // Adiciona uma mensagem de cabeçalho
@@ -109,7 +112,7 @@ sendMessageBtn.addEventListener('click', async () => {
     if (currentAction === 'encrypt') {
         addChatMessage(message, 'sent'); // Adiciona a mensagem enviada ao chat
         try {
-            const response = await fetch('http://localhost:3000/encrypt', {
+            const response = await fetch(`${baseUrl}/encrypt`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -142,7 +145,7 @@ sendMessageBtn.addEventListener('click', async () => {
         // Ação para descriptografar a mensagem
         const apiKey = message;
         try {
-            const response = await fetch('http://localhost:3000/decrypt', {
+            const response = await fetch(`${baseUrl}/decrypt`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
