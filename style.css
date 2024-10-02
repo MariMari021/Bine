@@ -14,6 +14,8 @@ body {
     background: white;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
 }
 
 h1 {
@@ -29,12 +31,33 @@ h1 {
     border: 1px solid #ccc;
     border-radius: 4px;
     background: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Espaçamento entre as mensagens */
+}
+
+.message {
+    padding: 10px;
+    border-radius: 15px;
+    max-width: 80%;
+}
+
+.message.sent {
+    align-self: flex-end;
+    background-color: #4CAF50;
+    color: white;
+}
+
+.message.received {
+    align-self: flex-start;
+    background-color: #e4e6eb;
+    color: black;
 }
 
 .options {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-top: 10px; /* Espaço entre as mensagens e os botões */
 }
 
 button {
