@@ -60,3 +60,40 @@ app.get('/history', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
+
+// Função para descriptografar uma mensagem
+function decryptMessage(encryptedMessage, iv, apiKeyInput) {
+    const algorithm = 'aes-256-cbc';
+    const key = crypto.scryptSync(apiKeyInput, 'salt', 32); // Usa a chave fornecida pelo usuário
+    const decipher = crypto.createDecipheriv(algorithm, key, Buffer.from(iv, 'hex'));
+
+    let decrypted = decipher.update(encryptedMessage, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
+    
+    return decrypted;
+}
+
+// Rota de descriptografia
+app.post('/decrypt', (req, res) => {
+    const { apiKey, messageIndex } = req.body;
+
+    if (!apiKey || messageIndex == null) {
+        return res.status(400).json({ error: 'Chave de API e índice da mensagem são obrigatórios.' });
+    }
+
+    if (apiKey !== apiKey) {
+        return res.status(401).json({ error: 'Chave de API inválida.' });
+    }
+
+    const message = history[messageIndex];
+    if (!message) {
+        return res.status(404).json({ error: 'Mensagem não encontrada.' });
+    }
+
+    try {
+        const decryptedMessage = decryptMessage(message.encryptedData, message.iv, apiKey);
+        res.json({ decryptedMessage });
+    } catch (error) {
+        res.status(500).json({ error: 'Erro ao descriptografar a mensagem.' });
+    }
+});
