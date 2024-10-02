@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat de Criptografia</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Chat de Criptografia</h1>
+        <div id="chat" class="chat-box"></div>
+        
+        <div id="options" class="options">
+            <button id="encrypt-btn">Criptografar uma Mensagem</button>
+            <button id="history-btn">Ver o Histórico</button>
+        </div>
+        
+        <div id="message-input" class="input-area" style="display: none;">
+            <input type="text" id="message" placeholder="Digite sua mensagem">
+            <button id="send-message">Enviar</button>
+        </div>
+
+        <div id="result" style="display: none;">
+            <h2>Resultado:</h2>
+            <pre id="encrypted-message"></pre>
+        </div>
+
+        <div id="history" style="display: none;">
+            <h2>Histórico:</h2>
+            <ul id="history-list"></ul>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
