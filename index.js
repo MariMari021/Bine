@@ -42,7 +42,7 @@ function addActionButtons() {
                 addChatMessage('Histórico de Mensagens:', 'received'); // Adiciona uma mensagem de cabeçalho
 
                 history.forEach(item => {
-                    addChatMessage(`Mensagem: ${item.message}, IV: ${item.iv}, Criptografada: ${item.encryptedData}, Timestamp: ${item.timestamp}`, 'received');
+                    addChatMessage(`IV: ${item.iv}, Criptografada: ${item.encryptedData}, Timestamp: ${item.timestamp}`, 'received');
                 });
             } else {
                 addChatMessage('Erro ao obter histórico.', 'received');
@@ -89,7 +89,6 @@ sendMessageBtn.addEventListener('click', async () => {
 
             if (response.ok) {
                 addChatMessage('Mensagem criptografada com sucesso!', 'received');
-                addChatMessage(`IV: ${data.iv}\nMensagem Criptografada: ${data.encryptedData}`, 'received'); // Adiciona resultado abaixo da mensagem de sucesso
             } else {
                 addChatMessage('Erro ao criptografar a mensagem.', 'received');
             }
