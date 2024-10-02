@@ -46,7 +46,7 @@ historyBtn.addEventListener('click', async () => {
 
             history.forEach(item => {
                 const li = document.createElement('li');
-                li.textContent = `Mensagem: ${item.message}, IV: ${item.iv}, Criptografada: ${item.encryptedData}, Timestamp: ${item.timestamp}`;
+                li.textContent = `IV: ${item.iv}, Criptografada: ${item.encryptedData}, Timestamp: ${item.timestamp}`;
                 historyList.appendChild(li);
             });
         } else {
